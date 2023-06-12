@@ -25,36 +25,41 @@ app.get("/contact", function (req, res) {
 });
 
 app.get("/", (req, res) => {
-  postModel.find({}, (err, posts) => {
-    res.render('home', {
-      startingContent: homeStartingContent,
-      posts: posts
-
+  postModel
+    .find()
+    .then((posts) => {
+      res.render("home", {
+        startingContent: homeStartingContent,
+        posts: posts,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  });
 });
-
 app.get("/compose", function (req, res) {
   res.render("compose");
 });
 
+
+
 app.post("/compose", function (req, res) {
   const post = new postModel({
     title: req.body.postTitle,
-    content: req.body.postBody
+    content: req.body.postBody,
+    author: req.body.author
   });
 
-  post.save(function(err){
-
-    if (!err){
- 
+  post.save()
+    .then(() => {
       res.redirect("/");
- 
-    }
- 
-  });
-
-  res.redirect("/");
+    })
+    .catch(err => {
+      // Handle the error
+      console.error(err);
+      // Redirect to an error page or send an error response
+      res.redirect("/error");
+    });
 
 });
 
@@ -77,7 +82,7 @@ app.get("/posts/:postName", function (req, res) {
     });
 });
 
-mongoose.connect("mongodb+srv://khushboo-123:_khushbooK123@api.l6ttkfg.mongodb.net/PostDb", {
+mongoose.connect("mongodb+srv://khushboo-123:_khushbooK123@api.l6ttkfg.mongodb.net/postDB", {
   useNewUrlParser: true,
 }).then(() => {
   app.listen(3000, function () {
