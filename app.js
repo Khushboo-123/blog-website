@@ -1,5 +1,4 @@
 //jshint esversion:6
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
@@ -93,8 +92,10 @@ app.get("/posts/:postId", function (req, res) {
 });
 
 
-mongoose.connect("mongodb+srv://khushboo-123:_khushbooK123@api.l6ttkfg.mongodb.net/postDB", {
+ mongoose.connect("mongodb+srv://khushboo-123:testing-123@api.l6ttkfg.mongodb.net/postDB" , {
   useNewUrlParser: true,
+
+  useUnifiedTopology: true,
 }).then(() => {
   app.listen(3000, function () {
     console.log("Server started on port 3000");

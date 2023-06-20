@@ -1,27 +1,22 @@
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap');
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <%- include("partials/header"); -%>
-    <h1>Home</h1>
-    <p> <%= startingContent %> </p>
+  <h1>Home</h1>
+  <div class="home-container">
+    <p><%= startingContent %></p>
+    <p class="compose-button">Wanna compose a new article? Try it out... <a href="/compose" class="btn btn-primary">Compose</a></p>
+  </div>
 
-
-  <%  posts.forEach(function(post){ %>
-
-    <h1><%=post.title%></h1>
-    <p>
-    <%=post.content.substring(0, 100) + " ..."%></p>
-    <p><strong>Date:</strong> <%= post.date.toLocaleString('en-US', { day: '2-digit', month: 'long', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true }) %>
-    </p>
-    <p><strong>Author:</strong> <%= post.author %></p>
-    <a href="/posts/<%= post._id %>">Read More</a>
-    </p>
-
-
+  <div class="grid-container">
+    <% posts.forEach(function(post){ %>
+      <div class="post">
+        <h1><%= post.title %></h1>
+        <p><%= post.content.substring(0, 100) + " ..." %></p>
+        <p><strong>Date:</strong> <%= post.date.toLocaleString('en-US', { day: '2-digit', month: 'long', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true }) %></p>
+        <p><strong>Author:</strong> <%= post.author %></p>
+        <a href="/posts/<%= post._id %>">Read More</a>
+      </div>
     <% }) %>
-    
-    <p class="compose-button">Wanna compose new article ? Try out.. <a href="/compose" class="btn btn-primary">Compose</a></p>
-
+  </div>
 
 <%- include("partials/footer"); -%>
