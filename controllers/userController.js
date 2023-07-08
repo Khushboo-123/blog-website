@@ -45,7 +45,7 @@ class UserController {
                         });
                     }
                     catch (error) {
-                        res.send({ "status": "failed", "message": "Unable to register" })
+                        res.status(400).json({ status: "failed", message: error.message });
                     }
                 } else {
                     throw new ValidationError("Password and password_confirm does not match")
