@@ -1,10 +1,11 @@
+<%- include('partials/header') %>
 <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<%- include("partials/header"); -%>
-  <h1>Home</h1>
+<div class="container mt-5">
+  <h1>Hey there! Welcome</h1>
   <div class="home-container">
     <p><%= startingContent %></p>
-    <p class="compose-button">Wanna compose a new article? Try it out... <a href="/compose" class="btn btn-primary">Compose</a></p>
+    <p class="beautiful-button">Wanna compose a new article? Try it out... <a href="/compose" class="btn btn-primary">Get started</a></p>
   </div>
 
   <div class="grid-container">
@@ -18,5 +19,5 @@
       </div>
     <% }) %>
   </div>
-
-<%- include("partials/footer"); -%>
+</div>
+<%- include('partials/footer') %>
