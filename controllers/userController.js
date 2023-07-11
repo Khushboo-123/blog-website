@@ -21,87 +21,46 @@ const {RegisterSchema,
 
 class UserController {
     static userRegistration = async (req, res) => {
-        try {
-        
-          const { name, email, password, password_confirm  , tc} = req.body;
-        
-                    const user = await UserModel.findOne({ email: email });
-          if (user) {
-            throw new ValidationError("Email already exists");
-          }
-      
-          if (name && email && password && password_confirm &&tc) {
-            if (password === password_confirm) {
-              const salt = await bcrypt.genSalt(12);
-              const hashedPassword = await bcrypt.hash(password, salt);
-      
-              const savedUser = new UserModel({
-                name: name,
-                email: email,
-                password: hashedPassword,
-                // tc: Boolean(tc)
-              });
-      
-              await savedUser.save();
-              const existingUser = await UserModel.findOne({ email: email });
-      
-              // Generate JWT token
-              const token = jwt.sign({ userId: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '30d' });
-    
+        const { name, email, password, password_confirm, tc } = req.body; //req.body - froontend se data aa rha hai 
+        const user = await UserModel.findOne({ email: email })
+        if (user) throw new ValidationError("Email already exists")
+        else {
+            if (name && email && password && password_confirm && tc) {
+                if (password === password_confirm) {
+                    try {
+                        const salt = await bcrypt.genSalt(12);
+                        const hashedPassword = await bcrypt.hash(password, salt);
 
-        
-         
-              res.status(200).send(`
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Successful</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #f5f5f5;
-      }
-      .container {
-        text-align: center;
-      }
-      h1 {
-        font-size: 32px;
-        margin-bottom: 20px;
-      }
-      p {
-        font-size: 18px;
-        color: #888;
-        margin-bottom: 20px;
-      }
-      .button {
-        display: inline-block;
-        padding: 12px 24px;
-        font-size: 18px;
-        font-weight: bold;
-        text-decoration: none;
-        color: #fff;
-        background-color: #007bff;
-        border-radius: 4px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Registration Successful</h1>
-      <p>Thank you for registering!</p>
-      <a href="/" class="button">Go to Homepage</a>
-    </div>
-  </body>
-  </html>
-`);
+                        const savedUser = new UserModel({
+                            name: name,  //frontend vaala name database mein jaayega right one is from frontend 
+                            email: email,
+                            password: hashedPassword,
+                            tc: tc
+                        })
+
+                        await savedUser.save();
+                        const existingUser = await UserModel.findOne({ email: email })
+                        //generate jwt token
+                        const token = jwt.sign({ userId: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '30d' });
+
+                        //send email
+                        res.status(200).send({
+                            data: {
+                                name: savedUser?.name || "",
+                                email: savedUser?.email || "",
+                                password: savedUser?.password || "",
+                                "token": token,
+                            },
+                            message: "Registration successful",
+
+                        });
+                    }
+                    catch (error) {
+                        res.send({ "status": "failed", "message": "Unable to register" })
+                    }
+                } else {
+                    throw new ValidationError("Password and password_confirm does not match")
+                }
 
             } else {
               throw new ValidationError("Password and password_confirm do not match");
