@@ -19,12 +19,23 @@
     <nav class="main-nav">
       <ul class="nav">
         <li id="home"><a href="/">Home</a></li>
-        <li id="about"><a href="/about">About</a></li>
-        <li id="contact"><a href="/contact">Contact</a></li>
+        <!-- <li id="about"><a href="/about">About</a></li>
+        <li id="contact"><a href="/contact">Contact</a></li> -->
         <li id="regLogn"><a class="btn btn-light btn-lg " href="/register" role="button">Register</a></li>
         <li id="regLogn"><a class="btn btn-dark btn-lg  " href="/login" role="button">Login</a></li>
       </ul>
     </nav>
+    <div class="filter-section">
+      <label for="category">Filter by Category:</label>
+      <select id="category" name="category" onchange="this.form.submit()">
+        <option value="">All Categories</option>
+        <option value="tech">Tech</option>
+        <option value="uiux">UI/UX</option>
+        <option value="career">Career</option>
+        <option value="lifestyle">Lifestyle</option>
+        <option value="startup">Startup</option>
+      </select>
+    </div>
   </header>
 
   <div class="content"></div>

@@ -1,10 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const bodyParser = require('body-parser')
+const session = require('express-session');
 const UserController = require('../controllers/userController');
 const checkUserAuth = require('../middlewares/auth-middleware')
 
-//Public Routes -- without login can be accessed
+  const app = express();
+  app.use(bodyParser.urlencoded({ extended: true }));
 
+//Public Routes -- without login can be accessed
 router.post("/register" , UserController.userRegistration)
 router.post("/login" ,  UserController.userLogin)
 router.post("/send-User-Password-Reset-Email" , UserController.sendUserPasswordResetEmail);

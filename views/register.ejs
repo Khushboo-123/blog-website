@@ -8,7 +8,7 @@
         <div class="card-body">
 
           <!-- Makes POST request to /user/register route -->
-          <form action="/user/register" method="POST">
+          <form action="/api/user/register" method="POST">
             <div class="form-group">
               <label for="name">Name</label>
               <input type="text" name="name" placeholder="Name" required>
@@ -27,9 +27,10 @@
             </div>
             <div class="form-group">
               <label for="tc">Terms and Conditions</label>
-              <input type="checkbox" name="tc" required>
+              <input type="checkbox" name="tc" value="true" required>
               I agree to the Terms and Conditions
             </div>
+            
             <button type="submit" class="btn btn-dark">Register</button>
           </form>
 

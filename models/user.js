@@ -21,7 +21,8 @@ const userSchema = new mongoose.Schema({
     },
     tc: {
         type: Boolean,
-        required: true,
+        default:false,
+        required:true,
 
     }
 

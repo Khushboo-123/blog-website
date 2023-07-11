@@ -4,6 +4,7 @@ const postSchema = {
     title : String,
     content : String,
     author: String,
+    category: String,
     date:{
         type:Date,
         default: Date.now()

@@ -11,6 +11,7 @@ dotenv.config();
 const cors = require('cors');
 const connectdb = require("./config/connectdb");
 const userRoutes = require("./routes/userRoutes")
+const checkUserAuth = require('./middlewares/auth-middleware')
 
 
 const homeStartingContent = "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
@@ -31,8 +32,16 @@ app.get("/contact", function (req, res) {
 });
 
 app.get("/", (req, res) => {
+  const selectedCategory = req.query.category; // Get the selected category from the query parameters
+
+  let query = {}; // Define an empty query object
+
+  if (selectedCategory && selectedCategory !== "All") {
+    query.category = selectedCategory; // Add the category to the query object if a category is selected
+  }
+
   postModel
-    .find()
+    .find(query) // Pass the query object to filter the posts
     .then((posts) => {
       res.render("home", {
         startingContent: homeStartingContent,
@@ -44,16 +53,21 @@ app.get("/", (req, res) => {
     });
 });
 
-app.get("/compose", function (req, res) {
+
+
+app.get("/compose",  function (req, res) {
   res.render("compose");
 });
 
-app.post("/compose", function (req, res) {
+app.post("/compose",  function (req, res) {
   const post = new postModel({
     title: req.body.postTitle,
     content: req.body.postBody,
-    author: req.body.author
+    author: req.body.author,
+    category: req.body.category,
+    
   });
+
 
   post.save()
     .then(() => {
@@ -81,8 +95,11 @@ app.get("/posts/:postId", function (req, res) {
 
       res.render("post", {
         title: post.title,
-        content: post.content
+        content: post.content,
+        category: post.category,
+
       });
+    
     })
     .catch((err) => {
       console.log(err);
