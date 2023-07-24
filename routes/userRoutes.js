@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser')
-const session = require('express-session');
+const compression = require('compression')
+
+
 const UserController = require('../controllers/userController');
 const checkUserAuth = require('../middlewares/auth-middleware')
 
   const app = express();
+  app.use(compression())
   app.use(bodyParser.urlencoded({ extended: true }));
 
 //Public Routes -- without login can be accessed

@@ -3,6 +3,11 @@ const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const UserModel = require("../models/user");
 const  ValidationError  = require("../Errors/validation");
+const cookieParser = require('cookie-parser');
+const express = require('express')
+const app = express();
+app.use(cookieParser());
+
 
 
 const ejs = require("ejs");
@@ -117,26 +122,33 @@ class UserController {
 
       static userLogin = async (req, res) => {
         try {
-          const { email, password } = validate(LoginSchema , req.body)
+          const { email, password } = validate(LoginSchema, req.body);
           if (!email || !password) {
             throw new ValidationError("Email and password are required");
           }
-    
+      
           const user = await UserModel.findOne({ email: email });
           if (!user) {
             throw new ValidationError("User not found");
           }
-    
+      
           const isMatch = await bcrypt.compare(password, user.password);
           if (!isMatch) {
             throw new ValidationError("Invalid credentials");
           }
-    
+      
           // Generate JWT token
           const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
             expiresIn: "30d",
           });
-         
+          //set the token as cokkie
+          res.cookie("token" , token,{
+            httpOnly:true
+          })      
+          
+      
+          // Store the token in local storage
+        
           res.status(200).send(`
   <!DOCTYPE html>
   <html lang="en">
@@ -196,7 +208,7 @@ class UserController {
           
         }
       };
-  
+      
     static changePassword = async (req, res) => {
         try {
           const { password, password_confirm } = req.body;

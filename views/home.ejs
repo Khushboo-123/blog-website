@@ -4,23 +4,46 @@
 <link rel="stylesheet" href="style.css">
 
 <div class="container mt-5">
-  <h1>Hey there! Welcome</h1>
+  <h1 style="line-height: 1.5em;">A Space for<br><span class="highlight">Practical Knowledge</span></h1>
   <div class="home-container">
     <p><%= startingContent %></p>
     <p class="beautiful-button">Wanna compose a new article? Try it out... <a href="/compose" class="btn btn-primary">Get started</a></p>
   </div>
+</div>
 
+<div class="posts-container">
+  <div class="filter-section">
+    <label>Filter by Category:</label>
+    <form action="/">
+      <div class="category-buttons">
+        <button type="submit" class="category-button" name="category" value="">All Categories</button>
+        <button type="submit" class="category-button" name="category" value="Tech">Tech</button>
+        <button type="submit" class="category-button" name="category" value="UI/UX">UI/UX</button>
+        <button type="submit" class="category-button" name="category" value="Career">Career</button>
+        <button type="submit" class="category-button" name="category" value="Lifestyle">Lifestyle</button>
+        <button type="submit" class="category-button" name="category" value="Startup">Startup</button>
+      </div>
+    </form>
+  </div>
+  
   <div class="grid-container">
-    <% posts.forEach(function(post){ %>
+    <% posts.forEach(function(post) { %>
       <div class="post">
-        <h1><%= post.title %></h1>
-        <p><%= post.content.substring(0, 100) + " ..." %></p>
+        <h1><strong><%= post.title %></strong></h1>
+        <% if (post.imageUrl) { %>
+          <img src="<%= post.imageUrl %>" alt="Post Image">
+        <% } %>
+        <% if (post.content) { %>
+          <p><%= post.content.substring(0, 100) + " ..." %></p>
+        <% } %>
+        <a href="/posts/<%= post._id %>">Read More</a>
         <p><strong>Date:</strong> <%= post.date.toLocaleString('en-US', { day: '2-digit', month: 'long', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true }) %></p>
         <p><strong>Author:</strong> <%= post.author %></p>
-        <a href="/posts/<%= post._id %>">Read More</a>
       </div>
     <% }) %>
+    
   </div>
 </div>
 
 <%- include('partials/footer') %>
+

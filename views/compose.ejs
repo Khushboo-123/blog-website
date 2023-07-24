@@ -1,23 +1,26 @@
 <%- include("partials/header"); -%>
 <h1>Share Your Knowledge, Inspire Your Peers!</h1>
-<form class="" action="/compose" method="post">
+<form class="" action="/compose" method="post"  enctype="multipart/form-data>
   <div class="form-group">
     <label>Title</label>
     <input class="form-control title-input" type="text" name="postTitle">
     <label>Post</label>
     <textarea class="form-control title-input" name="postBody" rows="5" cols="30"></textarea>
     <label for="category">Category</label>
-    <select class="form-control" id="category" name="category">
-      <option value="">Select Category</option>
-      <option value="Tech">Tech</option>
-      <option value="UI/UX">UI/UX</option>
-      <option value="Career">Career</option>
-      <option value="Lifestyle">Lifestyle</option>
-      <option value="Startup">Startup</option>
-    </select>
-    <label for="author">Author</label>
-    <input type="text" class="form-control title-input" id="author" name="author" required>
-  </div>
+   
+      <select class="form-control" id="category" name="category">
+        <option value="">Select Category</option>
+        <option value="Tech">Tech</option>
+        <option value="UI/UX">UI/UX</option>
+        <option value="Career">Career</option>
+        <option value="Lifestyle">Lifestyle</option>
+        <option value="Startup">Startup</option>
+      </select> 
+      <label for="image">Image</label>
+      <input type="file" class="form-control" id="image" name="image">
+    </div>
   <button class="btn btn-primary" type="submit" name="button">Publish</button>
 </form>
+<script src="/firebase.js"></script>
+
 <%- include("partials/footer"); -%>

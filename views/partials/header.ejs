@@ -6,39 +6,46 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Lobster&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/c67b6cfc11.js" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
-</head>
 
+  <script>
+    function filterPosts() {
+      const category = document.getElementById("category").value;
+      window.location.href = `/?category=${category}`;
+    }
+  </script>
+</head>
+<title>PracEdge :A Space for Practical Knowledge</title>
+<link rel="icon" type="image/png" href="css/logo.png">
 <body>
   <header>
-    <h1 class="header-title">
-      Daily Journal
-    </h1>
+    <div class="logo-container">
+      <img class="logo" src="css/logo.png" alt="Logo">
+      <img class="logo1" src="css/name.png" alt="Name">
+    </div>
     <nav class="main-nav">
       <ul class="nav">
         <li id="home"><a href="/">Home</a></li>
-        <!-- <li id="about"><a href="/about">About</a></li>
-        <li id="contact"><a href="/contact">Contact</a></li> -->
-        <li id="regLogn"><a class="btn btn-light btn-lg " href="/register" role="button">Register</a></li>
-        <li id="regLogn"><a class="btn btn-dark btn-lg  " href="/login" role="button">Login</a></li>
+        <li id="about"><a href="/register">Register</a></li>
+        <li id="contact"><a href="/login">Login</a></li>
+        <li id="linkedin"><a href="https://www.linkedin.com/company/pracedge/"><i class="fa-brands fa-linkedin fa-xl" style="color: #0f62f0;"></i></i></a></li>
+        <li id="Instagram"><a href="https://www.instagram.com/pracedge/"><i class="fa-brands fa-square-instagram fa-xl" style="color: #aa336a;"></i></a></li>
+        <li id="youtube"><a href="https://www.youtube.com/@pracedge"><i class="fa-brands fa-youtube fa-xl" style="color: #f92810;"></i></a></li>
+        <li id="whatsapp"><a href="https://chat.whatsapp.com/JPXuDwV3zKe76Ep57P0rTm"><i class="fa-brands fa-whatsapp fa-xl" style="color: #49b521;"></i></i></a></li>
       </ul>
     </nav>
-    <div class="filter-section">
-      <label for="category">Filter by Category:</label>
-      <select id="category" name="category" onchange="this.form.submit()">
-        <option value="">All Categories</option>
-        <option value="tech">Tech</option>
-        <option value="uiux">UI/UX</option>
-        <option value="career">Career</option>
-        <option value="lifestyle">Lifestyle</option>
-        <option value="startup">Startup</option>
-      </select>
-    </div>
+    
+    
   </header>
 
   <div class="content"></div>
+  <script src="/firebase.js"></script>
+
 
 </body>
 
