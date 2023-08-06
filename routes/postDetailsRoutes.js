@@ -18,7 +18,7 @@ router.get("/:postId", function (req, res) {
     if (!mongoose.Types.ObjectId.isValid(postId)) {
       return res.status(404).send("Invalid post ID");
     }
-  
+
     postModel.findOne({ _id: new mongoose.Types.ObjectId(postId) })
       .then((post) => {
         if (!post) {
@@ -36,7 +36,8 @@ router.get("/:postId", function (req, res) {
               .sort({ date: 1 })
               .then((nextPost) => {
                 const nextPostId = nextPost ? nextPost._id : null;
-  
+                const imageUrl = post.imageUrl;
+
                 res.render("post", {
                   postId: postId,
                   title: post.title,
@@ -44,6 +45,7 @@ router.get("/:postId", function (req, res) {
                   content: post.content,
                   category: post.category,
                   comments: post.comments,
+                  imageUrl: imageUrl,
                   prevPostId: prevPostId,
                   nextPostId: nextPostId,
                   selectedCategory: '',
